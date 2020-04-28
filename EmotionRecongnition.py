@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import image1_rc
 import numpy as np
 import cv2
-from os import getcwd
+
 #from preprocess  import *
 #from skimage import measure, color
 import math
@@ -19,7 +19,7 @@ from sympy import *
 
 class Ui_MainWindow(object):
     def __init__(self, MainWindow):
-        self.path = getcwd()
+        
         self.timer_camera = QtCore.QTimer() # 定时器
 
         self.setupUi(MainWindow)
@@ -27,8 +27,8 @@ class Ui_MainWindow(object):
         self.slot_init() # 槽函数设置
 
         self.cap = cv2.VideoCapture() # 屏幕画面对象
-        self.CAM_NUM = 1 # 摄像头标号
-        self.model_path = None # 模型路径
+        self.CAM_NUM = 0 # 摄像头标号
+        
         # self.__flag_work = 0
         self.boundaries = [([0, 0, 0], [180, 255, 46])]
 
@@ -358,7 +358,7 @@ class Ui_MainWindow(object):
 
         mask = ~mask
         #ret, mask = cv2.threshold(mask, 100, 255, cv2.THRESH_BINARY)
-        cv2.imwrite("./data/test.jpg",mask)
+        #cv2.imwrite("./data/test.jpg",mask)
         #print(mask.shape)    
                 # 进行与操作    
         #output = cv2.bitwise_and(img_resize, img_resize, mask = mask)
@@ -395,7 +395,7 @@ class Ui_MainWindow(object):
         #realx = np.arange(500)
         realy =  np.zeros((600))  # 真实的Y便宜
         y  = mask[599,:]  # 先确定realx起始点
-        print(y)
+        #print(y)
         
         for j in range (600):
             flage = 1
@@ -423,7 +423,7 @@ class Ui_MainWindow(object):
         p2 = np.poly1d(f2)
         #print(p2)
         #print(float(p2[1]))
-        xx = np.zeros(600)
+        xx = np.arange(600)
         yy = np.zeros(600)
         yvals = p2(realx)  #拟合y值
 
@@ -447,7 +447,7 @@ class Ui_MainWindow(object):
         for i in range(len(realx)):
 
             realqulv[i]=dify3.subs('x',realx[i])
-        print("qulv is:",realqulv)  #打印曲率
+        #print("qulv is:",realqulv)  #打印曲率
 
 
 
